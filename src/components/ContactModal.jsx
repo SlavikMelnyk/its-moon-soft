@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import SuccessView from "./SuccessView";
@@ -56,23 +56,51 @@ export default function ContactModal({ isOpen, onClose }) {
   const [form, setForm] = useState({ ...INITIAL_FORM });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");
+  const modalRef = useRef(null);
 
-  const handleEscape = useCallback(
+  const handleKeyDown = useCallback(
     (e) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
     },
     [onClose]
   );
 
   useEffect(() => {
     if (!isOpen) return;
-    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
+    // Auto-focus the Name input when modal opens
+    const timer = setTimeout(() => {
+      modalRef.current?.querySelector('input[name="name"]')?.focus();
+    }, 100);
     return () => {
-      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
+      clearTimeout(timer);
     };
-  }, [isOpen, handleEscape]);
+  }, [isOpen, handleKeyDown]);
 
   useEffect(() => {
     if (isOpen) {
@@ -80,6 +108,18 @@ export default function ContactModal({ isOpen, onClose }) {
       setErrors({});
       setStatus("idle");
     }
+  }, [isOpen]);
+
+  // Remove country selector button from tab order
+  useEffect(() => {
+    if (!isOpen || !modalRef.current) return;
+    const timer = setTimeout(() => {
+      const btn = modalRef.current?.querySelector(
+        ".react-international-phone-country-selector-button"
+      );
+      if (btn) btn.setAttribute("tabindex", "-1");
+    }, 150);
+    return () => clearTimeout(timer);
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -136,6 +176,7 @@ export default function ContactModal({ isOpen, onClose }) {
       aria-label="Contact form"
     >
       <div
+        ref={modalRef}
         className="relative w-full sm:max-w-xl bg-white sm:rounded-2xl shadow-2xl overflow-y-auto sm:max-h-[90vh] flex flex-col"
         style={{
           animation: "modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -250,7 +291,6 @@ export default function ContactModal({ isOpen, onClose }) {
                   />
                 </div>
 
-                {/* Submit */}
                 <div className="flex flex-col items-center sm:flex-row sm:items-center gap-3 sm:gap-4 pt-1">
                   <button
                     type="button"

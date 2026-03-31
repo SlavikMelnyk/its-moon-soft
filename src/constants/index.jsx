@@ -31,8 +31,8 @@ export const featuresData = [
 
 // Footer Links
 export const footerLinks = [
-  { label: "About us", href: "#about" },
   { label: "Services", href: "#services" },
+  { label: "About us", href: "#about" },
   { label: "Teams", href: "#teams" },
   { label: "Contact", href: "#cta" },
 ];
