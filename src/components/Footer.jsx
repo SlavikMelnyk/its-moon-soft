@@ -5,7 +5,13 @@ const Footer = () => (
     <div className="container py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
       <a
         href="#hero"
-        className="text-n-1 font-semibold text-sm tracking-wide hover:text-color-1 transition-colors duration-200"
+        onClick={(e) => {
+          e.preventDefault();
+          document
+            .querySelector("#hero")
+            ?.scrollIntoView({ behavior: "smooth" });
+        }}
+        className="text-n-1 font-semibold text-sm tracking-wide hover:text-color-1 transition-colors duration-200 cursor-pointer"
       >
         It'sMoonSoft
       </a>
@@ -15,7 +21,13 @@ const Footer = () => (
           <a
             key={l.label}
             href={l.href}
-            className="font-code text-xs font-semibold uppercase text-n-1/40 hover:text-n-1 transition-colors duration-200"
+            onClick={(e) => {
+              e.preventDefault();
+              document
+                .querySelector(l.href)
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="font-code text-xs font-semibold uppercase text-n-1/40 hover:text-n-1 transition-colors duration-200 cursor-pointer"
           >
             {l.label}
           </a>
