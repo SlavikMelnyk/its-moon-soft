@@ -1,16 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import moonImg from "../../assets/svg/full-moon.jpg";
 
-const SIZE = 36;
-
 export default function MoonLogo() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+  const [size, setSize] = useState(36);
   const containerRef = useRef(null);
   const targetRef = useRef({ x: 0, y: 0 });
   const currentRef = useRef({ x: 0, y: 0 });
   const rafRef = useRef(null);
 
   useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      setSize(mobile ? 24 : 36);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
     let active = true;
 
     const tick = () => {
@@ -45,33 +53,37 @@ export default function MoonLogo() {
 
     window.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
+
     return () => {
       active = false;
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("resize", handleResize);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
   // Bright spot follows the cursor
   const dist = Math.sqrt(pos.x * pos.x + pos.y * pos.y);
-  const brightX = 50 + pos.x * 45; // знак змінено
-  const brightY = 50 + pos.y * 45; // знак змінено
-
-  // Crescent gets thinner as cursor moves further from center
+  const brightX = 50 + pos.x * 45;
+  const brightY = 50 + pos.y * 45;
   const spread = 25 - dist * 12;
 
   return (
     <div
       ref={containerRef}
       className="relative cursor-pointer"
-      style={{ width: SIZE, height: SIZE, flexShrink: 0, marginTop: 10 }}
+      style={{
+        width: size,
+        height: size,
+        flexShrink: 0,
+        marginTop: isMobile ? 8 : 10,
+      }}
     >
-      {/* Moon container — clips everything inside to circle */}
       <div
         style={{
-          width: SIZE,
-          height: SIZE,
+          width: size,
+          height: size,
           borderRadius: "50%",
           overflow: "hidden",
           position: "relative",
@@ -81,24 +93,26 @@ export default function MoonLogo() {
         <img
           src={moonImg}
           alt="Moon logo"
-          width={SIZE}
-          height={SIZE}
+          width={size}
+          height={size}
           style={{
             objectFit: "cover",
             display: "block",
           }}
         />
 
-        {/* Dark overlay with bright cutout */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: `radial-gradient(circle at ${brightX}% ${brightY}%, transparent ${spread}%, rgba(0,0,0,0.4) ${
-              spread + 12
-            }%, rgba(0,0,0,0.85) ${spread + 25}%, #000 ${spread + 40}%)`,
-          }}
-        />
+        {/* Dark overlay — only render on non-mobile */}
+        {!isMobile && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: `radial-gradient(circle at ${brightX}% ${brightY}%, transparent ${spread}%, rgba(0,0,0,0.4) ${
+                spread + 12
+              }%, rgba(0,0,0,0.85) ${spread + 25}%, #000 ${spread + 40}%)`,
+            }}
+          />
+        )}
       </div>
     </div>
   );
