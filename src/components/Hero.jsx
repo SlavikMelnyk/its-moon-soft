@@ -83,7 +83,7 @@ const Hero = () => {
             />
 
             <div className="relative z-10 flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-16">
-              <div className="flex flex-row lg:flex-col gap-8 lg:gap-6 flex-shrink-0">
+              <div className="flex flex-row justify-between lg:justify-start lg:flex-col gap-8 lg:gap-6 shrink-0 w-full lg:w-auto">
                 {[
                   { value: "5+", label: "Years in business" },
                   { value: "100+", label: "Projects shipped" },
@@ -115,7 +115,7 @@ const Hero = () => {
               />
 
               <div className="flex-1 flex flex-col gap-6">
-                <p className="text-n-3 text-base leading-relaxed max-w-lg">
+                <p className="text-n-3 text-base leading-relaxed">
                   From the first wireframe to the final deployment we partner
                   with ambitious founders and growing teams to turn complex
                   ideas into polished high-performance digital products.

@@ -193,7 +193,7 @@ export default function ContactModal({ isOpen, onClose }) {
     >
       <div
         ref={modalRef}
-        className="relative w-full sm:max-w-xl bg-white sm:rounded-2xl shadow-2xl overflow-y-auto sm:max-h-[90vh] flex flex-col"
+        className="relative w-full sm:max-w-xl bg-neutral-50 sm:rounded-2xl shadow-2xl overflow-y-auto sm:max-h-[90vh] flex flex-col"
         style={{
           animation: "modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
@@ -408,7 +408,7 @@ export default function ContactModal({ isOpen, onClose }) {
           input:-webkit-autofill,
           input:-webkit-autofill:hover,
           input:-webkit-autofill:focus {
-            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+            -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;
             -webkit-text-fill-color: #1c1917 !important;
             caret-color: #1c1917 !important;
             transition: background-color 5000s ease-in-out 0s !important;

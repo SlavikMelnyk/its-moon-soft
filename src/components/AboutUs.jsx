@@ -5,7 +5,7 @@ import { featuresData } from "../constants";
 const AboutUs = () => (
   <Section
     id="about"
-    className="lg:pt-[12rem] pt-[8rem] pb-24 -mt-21"
+    className="lg:pt-[5rem] pt-[6rem] pb-24 -mt-21"
     crossesOffset="lg:translate-y-[5.25rem]"
     customPaddings
   >
