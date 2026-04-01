@@ -3,6 +3,7 @@ import moonImg from "../../assets/svg/full-moon.jpg";
 
 export default function MoonLogo() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [hasEntered, setHasEntered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [size, setSize] = useState(36);
   const containerRef = useRef(null);
@@ -12,7 +13,7 @@ export default function MoonLogo() {
 
   useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth <= 768;
+      const mobile = window.innerWidth <= 1018;
       setIsMobile(mobile);
       setSize(mobile ? 24 : 36);
     };
@@ -40,16 +41,14 @@ export default function MoonLogo() {
     rafRef.current = requestAnimationFrame(tick);
 
     const handleMouseMove = (e) => {
+      setHasEntered(true);
       const nx = (e.clientX / window.innerWidth) * 2 - 1;
       const ny = (e.clientY / window.innerHeight) * 2 - 1;
       targetRef.current.x = Math.max(-1, Math.min(1, nx));
       targetRef.current.y = Math.max(-1, Math.min(1, ny));
     };
 
-    const handleMouseLeave = () => {
-      targetRef.current.x = 0;
-      targetRef.current.y = 0.4;
-    };
+    const handleMouseLeave = () => {};
 
     window.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
@@ -68,6 +67,8 @@ export default function MoonLogo() {
   const brightX = 50 + pos.x * 45;
   const brightY = 50 + pos.y * 45;
   const spread = 25 - dist * 12;
+  // Overlay fades out as cursor approaches center (dist 0 = no darkness)
+  const overlayOpacity = Math.min(1, dist / 0.5);
 
   return (
     <div
@@ -102,11 +103,12 @@ export default function MoonLogo() {
         />
 
         {/* Dark overlay — only render on non-mobile */}
-        {!isMobile && (
+        {!isMobile && hasEntered && (
           <div
             style={{
               position: "absolute",
               inset: 0,
+              opacity: overlayOpacity,
               background: `radial-gradient(circle at ${brightX}% ${brightY}%, transparent ${spread}%, rgba(0,0,0,0.4) ${
                 spread + 12
               }%, rgba(0,0,0,0.85) ${spread + 25}%, #000 ${spread + 40}%)`,

@@ -2,7 +2,7 @@ import Section from "./Section";
 
 const CTA = ({ onOpenModal }) => (
   <Section
-    className="pt-[3rem] sm:pt-[9rem] pb-12 sm:pb-24 -mt-[5.25rem]"
+    className="pt-[3rem] sm:pt-[4rem] pb-12 sm:pb-24 -mt-[5.25rem]"
     crosses
     crossesOffset="lg:translate-y-[5.25rem]"
     customPaddings
