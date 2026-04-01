@@ -21,7 +21,7 @@ export default function SuccessView({ onClose }) {
           We've got your message
         </h3>
         <p className="text-stone-400 text-sm mt-1.5 max-w-xs mx-auto">
-          Expect a reply within one business day.
+          Expect a reply within one business day
         </p>
       </div>
       <button

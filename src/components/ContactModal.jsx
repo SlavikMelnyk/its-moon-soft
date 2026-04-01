@@ -20,6 +20,15 @@ const INITIAL_FORM = Object.freeze({
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+let cachedCountry = null;
+const countryPromise = fetch("https://ip2c.org/s")
+  .then((res) => res.text())
+  .then((text) => {
+    const parts = text.split(";");
+    if (parts[0] === "1" && parts[1]) cachedCountry = parts[1].toLowerCase();
+  })
+  .catch(() => {});
+
 function validate(form) {
   const errors = {};
   if (!form.name.trim()) errors.name = "Name is required";
@@ -56,7 +65,16 @@ export default function ContactModal({ isOpen, onClose }) {
   const [form, setForm] = useState({ ...INITIAL_FORM });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");
+  const [defaultCountry, setDefaultCountry] = useState(cachedCountry || "ua");
   const modalRef = useRef(null);
+
+  useEffect(() => {
+    if (!cachedCountry) {
+      countryPromise.then(() => {
+        if (cachedCountry) setDefaultCountry(cachedCountry);
+      });
+    }
+  }, []);
 
   const handleKeyDown = useCallback(
     (e) => {
@@ -91,7 +109,6 @@ export default function ContactModal({ isOpen, onClose }) {
     if (!isOpen) return;
     document.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
-    // Auto-focus the Name input when modal opens
     const timer = setTimeout(() => {
       modalRef.current?.querySelector('input[name="name"]')?.focus();
     }, 100);
@@ -110,7 +127,6 @@ export default function ContactModal({ isOpen, onClose }) {
     }
   }, [isOpen]);
 
-  // Remove country selector button from tab order
   useEffect(() => {
     if (!isOpen || !modalRef.current) return;
     const timer = setTimeout(() => {
@@ -217,7 +233,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 <h2 className="text-stone-900 text-xl sm:text-2xl font-bold leading-snug tracking-tight">
                   Let's build something
                   <br />
-                  remarkable together.
+                  remarkable together
                 </h2>
               </header>
 
@@ -250,14 +266,23 @@ export default function ContactModal({ isOpen, onClose }) {
                       Phone <span className="text-amber-500 ml-0.5">*</span>
                     </label>
                     <div
-                      className={`rounded-xl border-2 transition-colors duration-200 focus-within:border-stone-900 ${
+                      className={`rounded-xl border-2 transition-colors duration-200 focus-within:border-stone-900 cursor-text ${
                         errors.phone ? "border-red-400" : "border-stone-200"
                       }`}
                     >
                       <PhoneInput
-                        defaultCountry="ua"
+                        defaultCountry={defaultCountry}
                         value={form.phone}
                         onChange={(phone) => updateField("phone", phone)}
+                        inputProps={{
+                          onMouseDown: (e) => {
+                            e.preventDefault();
+                            const input = e.target;
+                            input.focus();
+                            const len = input.value.length;
+                            input.setSelectionRange(len, len);
+                          },
+                        }}
                       />
                     </div>
                     {errors.phone && (

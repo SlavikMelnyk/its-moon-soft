@@ -32,7 +32,7 @@ const Header = ({ onOpenModal }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full z-50 border-b border-n-6
+      className={`fixed top-0 left-0 w-full z-50 shadow-[0_4px_24px_rgba(0,0,0,0.5)]
         ${openNavigation ? "bg-n-8" : "bg-n-8/90 backdrop-blur-sm"}`}
     >
       <div className="relative z-[2] flex items-center px-5 lg:px-7.5 xl:px-10 max-lg:py-4 lg:h-20 bg-n-8">
