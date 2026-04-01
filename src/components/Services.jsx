@@ -7,7 +7,7 @@ const Services = () => (
   <Section id="services">
     <div className="container relative z-2">
       <Heading
-        className="md:max-w-md lg:max-w-[50rem]"
+        className="md:max-w-md lg:max-w-[55rem]"
         tag="What we do"
         title="We take products from zero to hero"
         text="Six core disciplines, one cohesive team - everything your product needs under one roof"
