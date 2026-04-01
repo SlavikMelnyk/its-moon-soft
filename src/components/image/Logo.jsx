@@ -19,7 +19,7 @@ const Logo = ({ onClick }) => (
         WebkitTextFillColor: "transparent",
       }}
     >
-      It's Moon Soft
+      It'sMoonSoft
     </span>
   </a>
 );
