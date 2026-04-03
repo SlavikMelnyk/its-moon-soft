@@ -62,13 +62,13 @@ export default function MoonLogo() {
     };
   }, []);
 
-  // Bright spot follows the cursor
+  // Shadow origin is opposite to cursor (light source) direction
   const dist = Math.sqrt(pos.x * pos.x + pos.y * pos.y);
-  const brightX = 50 + pos.x * 45;
-  const brightY = 50 + pos.y * 45;
-  const spread = 25 - dist * 12;
-  // Overlay fades out as cursor approaches center (dist 0 = no darkness)
-  const overlayOpacity = Math.min(1, dist / 0.5);
+  const shadowX = 50 + pos.x * 50;
+  const shadowY = 50 + pos.y * 50;
+  const spread = 20 + dist * 15;
+  // Overlay fades out as cursor approaches center (full moon = no shadow)
+  const overlayOpacity = Math.min(1, dist / 0.4);
 
   return (
     <div
@@ -109,9 +109,11 @@ export default function MoonLogo() {
               position: "absolute",
               inset: 0,
               opacity: overlayOpacity,
-              background: `radial-gradient(circle at ${brightX}% ${brightY}%, transparent ${spread}%, rgba(0,0,0,0.4) ${
-                spread + 12
-              }%, rgba(0,0,0,0.85) ${spread + 25}%, #000 ${spread + 40}%)`,
+              background: `radial-gradient(circle at ${shadowX}% ${shadowY}%, #000 ${spread}%, rgba(0,0,0,0.85) ${
+                spread + 15
+              }%, rgba(0,0,0,0.4) ${spread + 30}%, transparent ${
+                spread + 45
+              }%)`,
             }}
           />
         )}
