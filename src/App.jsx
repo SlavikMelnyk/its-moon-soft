@@ -6,6 +6,7 @@ import AboutUs from "./components/AboutUs";
 import Teams from "./components/Teams";
 import Cta from "./components/Cta";
 import Footer from "./components/Footer";
+import { Analytics } from "@vercel/analytics/next"
 import ContactModal from "./components/ContactModal";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Cta onOpenModal={() => setModalOpen(true)} />
         <Footer />
         <ContactModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+        <Analytics />
       </div>
     </>
   );
