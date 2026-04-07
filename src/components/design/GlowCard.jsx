@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 const GlowCard = ({
@@ -40,7 +42,7 @@ const GlowCard = ({
       />
 
       <div
-        className="absolute top-0 left-0 right-0 h-[1px] transition-opacity duration-300"
+        className="absolute top-0 left-0 right-0 h-px transition-opacity duration-300"
         style={{
           opacity: hovered ? 1 : 0,
           background: `linear-gradient(90deg, transparent, rgba(${accentRgb},0.65), transparent)`,

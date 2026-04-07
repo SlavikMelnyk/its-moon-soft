@@ -1,5 +1,8 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
-import moonImg from "../../assets/svg/full-moon.jpg";
+
+const moonImg = "/full-moon.jpg";
 
 export default function MoonLogo() {
   const [pos, setPos] = useState({ x: 0, y: 0 });

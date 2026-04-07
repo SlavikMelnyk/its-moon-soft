@@ -1,8 +1,8 @@
 export const navigation = [
-  { id: "1", title: "Services", url: "#services" },
-  { id: "0", title: "About Us", url: "#about" },
-  { id: "2", title: "Teams", url: "#teams" },
-  { id: "3", title: "Contact", url: "#cta" },
+  { id: "1", title: "Services", url: "/", sectionId: "services" },
+  { id: "0", title: "About Us", url: "/", sectionId: "about" },
+  { id: "2", title: "Teams", url: "/", sectionId: "teams" },
+  { id: "3", title: "Contact", url: "/", sectionId: "cta" },
 ];
 
 // About Us section
@@ -31,10 +31,10 @@ export const featuresData = [
 
 // Footer Links
 export const footerLinks = [
-  { label: "Services", href: "#services" },
-  { label: "About us", href: "#about" },
-  { label: "Teams", href: "#teams" },
-  { label: "Contact", href: "#cta" },
+  { label: "Services", href: "/", sectionId: "services" },
+  { label: "About us", href: "/", sectionId: "about" },
+  { label: "Teams", href: "/", sectionId: "teams" },
+  { label: "Contact", href: "/", sectionId: "cta" },
 ];
 
 // Hero Services

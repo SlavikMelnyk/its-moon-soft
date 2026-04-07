@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useCallback, useRef } from "react";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
@@ -180,7 +182,7 @@ export default function ContactModal({ isOpen, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-stretch sm:items-center justify-center p-0 sm:p-4"
+      className="fixed inset-0 z-100 flex items-stretch sm:items-center justify-center p-0 sm:p-4"
       style={{
         background: "rgba(28, 25, 23, 0.5)",
         backdropFilter: "blur(12px)",
@@ -198,7 +200,7 @@ export default function ContactModal({ isOpen, onClose }) {
           animation: "modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        <div className="h-1 w-full bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400" />
+        <div className="h-1 w-full bg-linear-to-r from-amber-400 via-orange-400 to-rose-400" />
 
         {status !== "success" && (
           <button

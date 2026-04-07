@@ -1,8 +1,9 @@
 import MoonLogo from "../moon-logo/MoonLogo";
+import Link from "next/link";
 
 const Logo = ({ onClick }) => (
-  <a
-    href="#hero"
+  <Link
+    href="/"
     onClick={onClick}
     className="flex items-center gap-3 group shrink-0"
   >
@@ -21,7 +22,7 @@ const Logo = ({ onClick }) => (
     >
       It'sMoonSoft
     </span>
-  </a>
+  </Link>
 );
 
 export default Logo;
