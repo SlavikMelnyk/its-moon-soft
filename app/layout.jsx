@@ -1,7 +1,36 @@
 import "../src/index.css";
 
+const siteUrl = "https://itsmoonsoft.com";
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "It'sMoonSoft",
+  url: siteUrl,
+  description:
+    "Digital studio that designs, builds, and scales high-performance digital products for founders and growing teams.",
+  logo: `${siteUrl}/apple-touch-icon.png`,
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "It'sMoonSoft",
+  url: siteUrl,
+  description:
+    "Design, build, and scale digital products — UI/UX, web, mobile, and brand.",
+  publisher: {
+    "@type": "Organization",
+    name: "It'sMoonSoft",
+    url: siteUrl,
+  },
+};
+
 export const metadata = {
-  title: "It'sMoonSoft — Digital Studio | Design, Build & Scale",
+  title: {
+    default: "It'sMoonSoft — Digital Studio | Design, Build & Scale",
+    template: "%s | It'sMoonSoft",
+  },
   description:
     "It'sMoonSoft is a digital studio that designs, builds, and scales high-performance digital products for ambitious founders and growing teams. UI/UX, web, mobile, and brand — from first wireframe to final deployment.",
   keywords: [
@@ -9,6 +38,7 @@ export const metadata = {
     "web development",
     "UI/UX design",
     "mobile development",
+    "mobile apps",
     "brand identity",
     "product strategy",
     "SaaS",
@@ -16,9 +46,11 @@ export const metadata = {
     "eCommerce",
     "React",
     "Next.js",
+    "It's Moon Soft",
   ],
   authors: [{ name: "It'sMoonSoft" }],
   creator: "It'sMoonSoft",
+  publisher: "It'sMoonSoft",
   metadataBase: new URL("https://itsmoonsoft.com"),
   alternates: {
     canonical: "/",
@@ -59,13 +91,31 @@ export const metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteJsonLd),
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
