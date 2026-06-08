@@ -7,9 +7,9 @@ import SuccessView from "./SuccessView";
 import Spinner from "./Spinner";
 
 const EMAILJS_CONFIG = {
-  serviceId: "service_q1d8p3q",
-  templateId: "template_g6zedsc",
-  publicKey: "yGf6vCDhzRCoRMeYk",
+  serviceId: "service_bxoek4h",
+  templateId: "template_9v9e8le",
+  publicKey: "ymAOm30YqUgVWoLix",
 };
 
 const INITIAL_FORM = Object.freeze({
